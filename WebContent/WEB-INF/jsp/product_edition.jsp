@@ -44,7 +44,7 @@
         String width = "";
         String depth = "";
         String height = "";
-        String form_url = "products";
+        String form_url = ctx + "/products";
     
         Product product = (Product) request.getAttribute("product");
         
@@ -97,16 +97,16 @@
               }
             %>
             <label>Designation</label>
-            <input name="designation" type="text" placeholder="Solution for roses' health..."><%= designation %></input>
+            <input name="designation" type="text" placeholder="Solution for roses' health..." value="<%= designation %>" /> 
             <label>Weight</label>
-            <input name="weight" type="text" placeholder="10 Kg..."><%= weight %></input>
+            <input name="weight" type="text" placeholder="10 Kg..." value="<%= weight %>" />
             <legend>Dimensions</legend>
             <label>Width</label>
-            <input name="width" type="text" placeholder="50''..."><%= width %></input>
+            <input name="width" type="text" placeholder="50''..." value="<%= width %>" />
             <label>Depth</label>
-            <input name="depth" type="text" placeholder="10''..."><%= depth %></input>
+            <input name="depth" type="text" placeholder="10''..." value="<%= depth %>" />
             <label>Height</label>
-            <input name="height" type="text" placeholder="90''..."><%= height %></input>
+            <input name="height" type="text" placeholder="90''..." value="<%= height %>" />
             <p></p>
             <button type="submit" class="btn">Save</button>
           </fieldset>

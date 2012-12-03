@@ -27,7 +27,7 @@ public class ProductsServlet extends HttpServlet {
 
         req.setAttribute("products", products);
 
-        final RequestDispatcher dispatch = req.getRequestDispatcher("WEB-INF/jsp/products.jsp");
+        final RequestDispatcher dispatch = req.getRequestDispatcher("/WEB-INF/jsp/products.jsp");
         dispatch.forward(req, resp);
     }
 

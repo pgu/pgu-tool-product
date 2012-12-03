@@ -74,6 +74,7 @@ public class ProductServlet extends HttpServlet {
     }
 
     private void findProduct(final HttpServletRequest req, final HttpServletResponse resp) throws IOException, ServletException {
+
         final String reference = parseReference(req);
 
         checkReferenceExists(resp, reference);
@@ -81,7 +82,7 @@ public class ProductServlet extends HttpServlet {
         final Product product = DB.ref2product.get(reference);
         req.setAttribute("product", product);
 
-        final RequestDispatcher dispatch = req.getRequestDispatcher("WEB-INF/jsp/product_edition.jsp");
+        final RequestDispatcher dispatch = req.getRequestDispatcher("/WEB-INF/jsp/product_edition.jsp");
         dispatch.forward(req, resp);
     }
 
