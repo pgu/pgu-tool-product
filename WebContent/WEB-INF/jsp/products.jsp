@@ -91,8 +91,8 @@
                 <td><%= product.depth %></td>
                 <td><%= product.height %></td>
                 <td>
-                    <button type="button" class="btn btn-primary" onclick="edit_product('<%= product.reference %>');"><i class="icon-pencil icon-white"></i></button>
-                    <button type="button" class="btn btn-danger" onclick="delete_product('<%= product.reference %>');"><i class="icon-trash icon-white"></i></button>
+                    <a href="products/<%= product.reference %>" class="btn btn-primary"><i class="icon-pencil icon-white"></i></a>
+                    <a href="products/<%= product.reference %>?method=delete" class="btn btn-danger"><i class="icon-trash icon-white"></i></a>
                 </td>
               </tr>
             <%
@@ -113,17 +113,6 @@
     <script src="http://code.jquery.com/jquery-latest.js"></script>
 <!--     <script src="js/bootstrap.min.js"></script> -->
     <script src="assets/js/bootstrap.js"></script>
-    <script type="text/javascript">
-    
-    function edit_product(reference) {
-    	console.log("edit product " + reference);
-    }
-    
-    function delete_product(reference) {
-    	console.log("delete product " + reference);
-    }
-    
-    </script>
 
   </body>
 </html>

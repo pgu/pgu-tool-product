@@ -13,7 +13,7 @@
   <!-- get  + /products/new      -> create a new product -->
   
   <!-- get  + /products/99       -> edit product 99 -->
-  <!-- del  + /products/99       -> delete product 99 -->
+  <!-- get  + /products/99?method=delete       -> delete product 99 -->
   <!-- put  + /products/99       -> modify for edition product 99 -->
   
   
