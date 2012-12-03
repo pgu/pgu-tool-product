@@ -17,24 +17,22 @@ public class ProductServlet extends HttpServlet {
     protected void doGet(final HttpServletRequest req, final HttpServletResponse resp) throws ServletException,
     IOException {
 
-        final String method = req.getParameter("method");
-
         try {
-
-            if (h.isVoid(method)) { // GET
-                findProduct(req, resp);
-
-            } else if ("delete".equalsIgnoreCase(method)) {
-                deleteProduct(req, resp);
+            if (req.getRequestURI().endsWith("/new")) {
+                createProduct(req, resp);
 
             } else {
-
-                throwException(400, String.format("Unknown method [%s] !", method), resp);
+                findProduct(req, resp);
             }
 
         } catch (final IllegalArgumentException e) {
             System.out.println(e);
         }
+    }
+
+    private void createProduct(final HttpServletRequest req, final HttpServletResponse resp) throws ServletException, IOException {
+        final RequestDispatcher dispatch = req.getRequestDispatcher("/WEB-INF/jsp/product_edition.jsp");
+        dispatch.forward(req, resp);
     }
 
     private void throwException(final int code, final String err_msg, final HttpServletResponse resp)
@@ -47,9 +45,19 @@ public class ProductServlet extends HttpServlet {
     @Override
     protected void doPost(final HttpServletRequest req, final HttpServletResponse resp) throws ServletException,
     IOException {
-        try {
-            putProduct(req, resp);
 
+        final String method = req.getParameter("method");
+
+        try {
+            if (h.isVoid(method)) {
+                putProduct(req, resp);
+
+            } else if ("delete".equalsIgnoreCase(method)) {
+                deleteProduct(req, resp);
+
+            } else {
+                throwException(400, String.format("Unknown method [%s] !", method), resp);
+            }
         } catch (final IllegalArgumentException e) {
             System.out.println(e);
         }

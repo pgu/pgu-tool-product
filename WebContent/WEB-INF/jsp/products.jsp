@@ -51,8 +51,8 @@
           <a class="brand" href="<%= ctx %>/">Products tool</a>
           <div class="nav-collapse collapse">
             <ul class="nav">
-              <li class="active"><a href="<%= ctx %>/">Description</a></li>
-              <li><a href="<%= ctx %>/series.html">Series</a></li>
+              <li class="active"><a href="<%= ctx %>/products">Products</a></li>
+              <li><a href="<%= ctx %>/products/new">New product</a></li>
             </ul>
           </div><!--/.nav-collapse -->
         </div>
@@ -60,6 +60,10 @@
     </div>
 
     <div class="container-fluid">
+      <div class="row-fluid">
+        <a href="<%= ctx %>/products/new" class="btn btn-primary"><i class="icon-plus icon-white"></i></a>      
+      </div>
+      <p></p>
       <div class="row-fluid">
         <table class="table table-bordered table-striped">
             <colgroup>
@@ -97,7 +101,10 @@
                 <td><%= product.height %></td>
                 <td>
                     <a href="<%= ctx %>/products/<%= product.reference %>" class="btn btn-primary"><i class="icon-pencil icon-white"></i></a>
-                    <a href="<%= ctx %>/products/<%= product.reference %>?method=delete" class="btn btn-danger"><i class="icon-trash icon-white"></i></a>
+                    <form action="<%= ctx %>/products/<%= product.reference %>" method="post">
+                      <input type="hidden" name="method" value="delete" />
+                      <button class="btn btn-danger" type="submit"><i class="icon-trash icon-white"></i></button>
+                    </form>
                 </td>
               </tr>
             <%

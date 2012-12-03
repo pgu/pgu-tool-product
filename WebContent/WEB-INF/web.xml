@@ -13,7 +13,7 @@
   <!-- get  + /products/new      -> create a new product -->
   
   <!-- get  + /products/99       -> edit product 99 -->
-  <!-- get  + /products/99?method=delete -> delete product 99 -->
+  <!-- post + /products/99?method=delete -> delete product 99 -->
   <!-- post + /products/99       -> modify for edition product 99 -->
   
   
@@ -21,10 +21,10 @@
     <servlet-name>product_edition</servlet-name>
     <servlet-class>pgu.ProductServlet</servlet-class>
   </servlet>
-<!--   <servlet> -->
-<!--     <servlet-name>product_new</servlet-name> -->
-<!--     <servlet-class>pgu.ProductServlet</servlet-class> -->
-<!--   </servlet> -->
+  <servlet>
+    <servlet-name>product_new</servlet-name>
+    <servlet-class>pgu.ProductServlet</servlet-class>
+  </servlet>
   <servlet>
     <servlet-name>products</servlet-name>
     <servlet-class>pgu.ProductsServlet</servlet-class>
@@ -34,10 +34,10 @@
     <servlet-name>products</servlet-name>
     <url-pattern>/products</url-pattern>
   </servlet-mapping>
-<!--   <servlet-mapping> -->
-<!--     <servlet-name>product_new</servlet-name> -->
-<!--     <url-pattern>/products/new</url-pattern> -->
-<!--   </servlet-mapping> -->
+  <servlet-mapping>
+    <servlet-name>product_new</servlet-name>
+    <url-pattern>/products/new</url-pattern>
+  </servlet-mapping>
   <servlet-mapping>
     <servlet-name>product_edition</servlet-name>
     <url-pattern>/products/*</url-pattern>

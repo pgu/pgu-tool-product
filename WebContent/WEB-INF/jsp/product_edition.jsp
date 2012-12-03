@@ -71,8 +71,20 @@
           <a class="brand" href="<%= ctx %>/">Products tool</a>
           <div class="nav-collapse collapse">
             <ul class="nav">
-              <li class="active"><a href="<%= ctx %>/">Description</a></li>
-              <li><a href="<%= ctx %>/series">Series</a></li>
+              <li><a href="<%= ctx %>/products">Products</a></li>
+              
+                <% 
+                  if (product == null) {
+                %>
+                <li class="active"><a href="<%= ctx %>/products/new">New product</a></li>
+                <% 
+                  } else {
+                %>
+                <li class="active"><a href="<%= ctx %>/products/<%=product.reference%>">Product <%=product.reference%></a></li>
+                <li><a href="<%= ctx %>/series">Series</a></li>
+                <% 
+                  }
+                %>
             </ul>
           </div><!--/.nav-collapse -->
         </div>
