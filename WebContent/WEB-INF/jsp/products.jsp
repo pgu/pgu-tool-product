@@ -100,11 +100,17 @@
                 <td><%= product.depth %></td>
                 <td><%= product.height %></td>
                 <td>
-                    <a href="<%= ctx %>/products/<%= product.reference %>" class="btn btn-primary"><i class="icon-pencil icon-white"></i></a>
-                    <form action="<%= ctx %>/products/<%= product.reference %>" method="post">
-                      <input type="hidden" name="method" value="delete" />
-                      <button class="btn btn-danger" type="submit"><i class="icon-trash icon-white"></i></button>
-                    </form>
+                    <div class="row-fluid">  
+                        <div class="span6">
+                            <a href="<%= ctx %>/products/<%= product.reference %>" class="btn btn-success"><i class="icon-pencil icon-white"></i></a>
+                        </div>
+                        <div class="span6">
+                            <form action="<%= ctx %>/products/<%= product.reference %>" method="post">
+                              <input type="hidden" name="method" value="delete" />
+                              <button class="btn btn-danger" type="submit"><i class="icon-trash icon-white"></i></button>
+                            </form>
+                        </div>
+                    </div>
                 </td>
               </tr>
             <%
