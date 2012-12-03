@@ -16,7 +16,16 @@ public class DB {
         pA.weight = "30 Kg";
         pA.width = "40''";
 
+        final Product pB = new Product();
+        pB.depth = "15''";
+        pB.designation = "Product for us";
+        pB.height = "25''";
+        pB.reference = "BBB";
+        pB.weight = "35 Kg";
+        pB.width = "45''";
+
         ref2product.put(pA.reference, pA);
+        ref2product.put(pB.reference, pB);
     }
 
 }

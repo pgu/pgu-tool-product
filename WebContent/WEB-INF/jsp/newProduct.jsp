@@ -40,7 +40,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </a>
-          <a class="brand" href="/">Product tool</a>
+          <a class="brand" href="/">Products tool</a>
           <div class="nav-collapse collapse">
             <ul class="nav">
               <li class="active"><a href="/">Description</a></li>
