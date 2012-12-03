@@ -1,5 +1,7 @@
 package pgu;
 
+import java.util.LinkedHashSet;
+
 public class Product {
 
     public String reference;
@@ -8,6 +10,7 @@ public class Product {
     public String width;
     public String depth;
     public String height;
+    public LinkedHashSet<String> pictures = new LinkedHashSet<String>();
 
     @Override
     public int hashCode() {
@@ -42,7 +45,7 @@ public class Product {
     @Override
     public String toString() {
         return "Product [reference=" + reference + ", designation=" + designation + ", weight=" + weight + ", width="
-                + width + ", depth=" + depth + ", height=" + height + "]";
+                + width + ", depth=" + depth + ", height=" + height + ", pictures=" + pictures + "]";
     }
 
 }
