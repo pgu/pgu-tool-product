@@ -16,65 +16,96 @@ public class ProductServlet extends HttpServlet {
     @Override
     protected void doGet(final HttpServletRequest req, final HttpServletResponse resp) throws ServletException, IOException {
 
-        final String reference = req.getParameter("reference");
+        final String method = req.getParameter("method");
 
-        if (h.isVoid(reference)) {
-            dispatchToNewProduct(req, resp);
-            return;
+        try {
+
+            if (h.isVoid(method)) { // GET
+                findProduct(req, resp);
+
+            } else if ("delete".equalsIgnoreCase(method)) {
+                deleteProduct(req, resp);
+
+            } else {
+
+                throwException(400, String.format("Unknown method [%s] !", method), resp);
+            }
+
+        } catch (final IllegalArgumentException e) {
+            System.out.println(e);
         }
-
-        if (!DB.ref2product.containsKey(reference)) {
-            dispatchToNewProduct(req, resp);
-            return;
-        }
-
-        final Product product = DB.ref2product.get(reference);
-        req.setAttribute("product", product);
-
-        final RequestDispatcher dispatch = req.getRequestDispatcher("WEB-INF/jsp/updateProduct.jsp");
-        dispatch.forward(req, resp);
     }
 
-    private void dispatchToNewProduct(final HttpServletRequest req, final HttpServletResponse resp)
-            throws ServletException, IOException {
+    private void throwException(final int code, final String err_msg, final HttpServletResponse resp) throws IOException {
 
-        final RequestDispatcher dispatch = req.getRequestDispatcher("WEB-INF/jsp/newProduct.jsp");
-        dispatch.forward(req, resp);
+        resp.sendError(code, err_msg);
+        throw new IllegalArgumentException(err_msg);
     }
 
     @Override
     protected void doPost(final HttpServletRequest req, final HttpServletResponse resp) throws ServletException, IOException {
+        try {
+            putProduct(req, resp);
 
-        final String reference = req.getParameter("reference");
+        } catch (final IllegalArgumentException e) {
+            System.out.println(e);
+        }
+    }
+
+    private void deleteProduct(final HttpServletRequest req, final HttpServletResponse resp) throws IOException {
+        final String reference = parseReference(req);
+
+        checkReferenceExists(resp, reference);
+
+        DB.ref2product.remove(reference);
+
+        resp.sendRedirect("products");
+    }
+
+    private void checkReferenceExists(final HttpServletResponse resp, final String reference) throws IOException {
 
         if (h.isVoid(reference)) {
-            req.setAttribute("ref_error", "The reference is empty");
-            dispatchToNewProduct(req, resp);
-            return;
+            throwException(400, "Product reference is empty!", resp);
         }
 
-        if (!req.getHeader("Referer").endsWith("updateProduct") //
-                && DB.ref2product.containsKey(reference)) {
-
-            req.setAttribute("ref_error", "The reference already exists");
-            dispatchToNewProduct(req, resp);
-            return;
+        if (!DB.ref2product.containsKey(reference)) {
+            throwException(404, String.format("Unknown product for the reference [%s] !", reference), resp);
         }
+    }
 
-        final Product product = new Product();
+    private void findProduct(final HttpServletRequest req, final HttpServletResponse resp) throws IOException, ServletException {
+        final String reference = parseReference(req);
+
+        checkReferenceExists(resp, reference);
+
+        final Product product = DB.ref2product.get(reference);
+        req.setAttribute("product", product);
+
+        final RequestDispatcher dispatch = req.getRequestDispatcher("WEB-INF/jsp/product_edition.jsp");
+        dispatch.forward(req, resp);
+    }
+
+    private void putProduct(final HttpServletRequest req, final HttpServletResponse resp) throws IOException {
+        final String reference = parseReference(req);
+
+        checkReferenceExists(resp, reference);
+
+        final Product product = DB.ref2product.get(reference);
         product.depth = req.getParameter("depth");
         product.designation = req.getParameter("designation");
         product.height = req.getParameter("height");
-        product.reference = req.getParameter("reference");
         product.weight = req.getParameter("weight");
         product.width = req.getParameter("width");
 
-        DB.ref2product.put(product.reference, product);
+        resp.sendRedirect("products/" + product.reference);
+    }
 
-        req.setAttribute("product", product);
+    private String parseReference(final HttpServletRequest req) {
 
-        final RequestDispatcher dispatch = req.getRequestDispatcher("WEB-INF/jsp/updateProduct.jsp");
-        dispatch.forward(req, resp);
+        final String pathInfo = req.getPathInfo();
+        final int lastSlash = pathInfo.lastIndexOf("/");
+
+        return pathInfo.substring(lastSlash + "/".length());
     }
 
 }

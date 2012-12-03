@@ -2,11 +2,12 @@
 <%
     String ctx = request.getContextPath();
 %>
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>Invalid Request</title>
+    <title>Not found</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="<%= ctx %>/assets/css/bootstrap.css" rel="stylesheet">
     <style type="text/css">
@@ -34,8 +35,8 @@
 
     <div class="container-fluid">
       <div class="row-fluid">
-        <div class="alert alert-error">
-          <strong>Invalid request!</strong> <%= request.getAttribute("javax.servlet.error.message") %>
+        <div class="alert alert-info">
+          <strong>Not found!</strong> <%= request.getAttribute("javax.servlet.error.message") %>
         </div>
       </div>
       

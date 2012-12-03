@@ -1,4 +1,3 @@
-<%@ page import="java.util.ArrayList" %>
 <%@ page import="pgu.Product" %>
 <%@ page import="java.lang.String" %>
 
@@ -39,6 +38,27 @@
   </head>
 
   <body>
+    <%
+        String designation = "";
+        String weight = "";
+        String width = "";
+        String depth = "";
+        String height = "";
+        String form_url = "products";
+    
+        Product product = (Product) request.getAttribute("product");
+        
+        if (product != null) {
+            designation = product.designation; 
+            weight = product.weight; 
+            width = product.width; 
+            depth = product.depth; 
+            height = product.height; 
+            
+            form_url += "/" + product.reference;
+        }
+    
+    %>
 
     <div class="navbar navbar-inverse navbar-fixed-top">
       <div class="navbar-inner">
@@ -52,7 +72,7 @@
           <div class="nav-collapse collapse">
             <ul class="nav">
               <li class="active"><a href="<%= ctx %>/">Description</a></li>
-              <li><a href="<%= ctx %>/series.html">Series</a></li>
+              <li><a href="<%= ctx %>/series">Series</a></li>
             </ul>
           </div><!--/.nav-collapse -->
         </div>
@@ -61,50 +81,37 @@
 
     <div class="container-fluid">
       <div class="row-fluid">
-        <table class="table table-bordered table-striped">
-            <colgroup>
-              <col class="span2">
-              <col class="span2">
-              <col class="span1">
-              <col class="span1">
-              <col class="span1">
-              <col class="span1">
-              <col class="span1">
-            </colgroup>
-            <thead>
-              <tr>
-                <th>Reference</th>
-                <th>Designation</th>
-                <th>Weight</th>
-                <th>Width</th>
-                <th>Depth</th>
-                <th>Height</th>
-                <th></th>
-              </tr>
-            </thead>
-            <tbody>
-            <%
-                ArrayList<Product> products = (ArrayList<Product>) request.getAttribute("products");
+        <form action="<%= form_url %>" method="post">
+          <fieldset>
+            <legend>Product's description</legend>
+            <label>Reference</label>
+            <% 
+              if (product == null) {
+            %>
+            <input name="reference" type="text" placeholder="XYZ789..."></input>
+            <% 
+              } else {
+            %>
+            <p><%= product.reference %></p>
+            <% 
+              }
+            %>
+            <label>Designation</label>
+            <input name="designation" type="text" placeholder="Solution for roses' health..."><%= designation %></input>
+            <label>Weight</label>
+            <input name="weight" type="text" placeholder="10 Kg..."><%= weight %></input>
+            <legend>Dimensions</legend>
+            <label>Width</label>
+            <input name="width" type="text" placeholder="50''..."><%= width %></input>
+            <label>Depth</label>
+            <input name="depth" type="text" placeholder="10''..."><%= depth %></input>
+            <label>Height</label>
+            <input name="height" type="text" placeholder="90''..."><%= height %></input>
+            <p></p>
+            <button type="submit" class="btn">Save</button>
+          </fieldset>
+        </form>      
             
-                for (Product product : products) {
-            %>
-              <tr>
-                <td><%= product.reference %></td>
-                <td><%= product.designation %></td>
-                <td><%= product.weight %></td>
-                <td><%= product.width %></td>
-                <td><%= product.depth %></td>
-                <td><%= product.height %></td>
-                <td>
-                    <a href="<%= ctx %>/products/<%= product.reference %>" class="btn btn-primary"><i class="icon-pencil icon-white"></i></a>
-                    <a href="<%= ctx %>/products/<%= product.reference %>?method=delete" class="btn btn-danger"><i class="icon-trash icon-white"></i></a>
-                </td>
-              </tr>
-            <%
-                }
-            %>
-            </tbody>
-          </table>      
       </div>
       
       <hr>
@@ -116,7 +123,6 @@
     </div><!--/.fluid-container-->
 
     <script src="http://code.jquery.com/jquery-latest.js"></script>
-<!--     <script src="js/bootstrap.min.js"></script> -->
     <script src="<%= ctx %>/assets/js/bootstrap.js"></script>
 
   </body>
