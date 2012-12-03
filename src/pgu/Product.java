@@ -2,12 +2,12 @@ package pgu;
 
 public class Product {
 
-    private String reference;
-    private String designation;
-    private String weight;
-    private String width;
-    private String depth;
-    private String height;
+    public String reference;
+    public String designation;
+    public String weight;
+    public String width;
+    public String depth;
+    public String height;
 
     @Override
     public int hashCode() {

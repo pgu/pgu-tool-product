@@ -1,3 +1,3 @@
 <%
-response.sendRedirect("newProduct");
+response.sendRedirect("products");
 %>

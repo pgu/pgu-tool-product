@@ -6,27 +6,51 @@
                              http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
 
   <!-- Servlets -->
+  
+  <!-- get  + /products          -> products list -->
+  <!-- post + /products          -> add product to list -->
+  
+  <!-- get  + /products/new      -> create a new product -->
+  
+  <!-- get  + /products/99       -> edit product 99 -->
+  <!-- del  + /products/99       -> delete product 99 -->
+  <!-- put  + /products/99       -> modify for edition product 99 -->
+  
+  
+<!--   <servlet> -->
+<!--     <servlet-name>product_edition</servlet-name> -->
+<!--     <servlet-class>pgu.ProductServlet</servlet-class> -->
+<!--   </servlet> -->
+<!--   <servlet> -->
+<!--     <servlet-name>product_new</servlet-name> -->
+<!--     <servlet-class>pgu.ProductServlet</servlet-class> -->
+<!--   </servlet> -->
   <servlet>
-    <servlet-name>saveProduct</servlet-name>
-    <servlet-class>pgu.EditProduct</servlet-class>
-  </servlet>
-  <servlet>
-    <servlet-name>newProduct</servlet-name>
-    <servlet-class>pgu.EditProduct</servlet-class>
+    <servlet-name>products</servlet-name>
+    <servlet-class>pgu.ProductsServlet</servlet-class>
   </servlet>
   
   <servlet-mapping>
-    <servlet-name>saveProduct</servlet-name>
-    <url-pattern>/saveProduct</url-pattern>
+    <servlet-name>products</servlet-name>
+    <url-pattern>/products</url-pattern>
   </servlet-mapping>
-  <servlet-mapping>
-    <servlet-name>newProduct</servlet-name>
-    <url-pattern>/newProduct</url-pattern>
-  </servlet-mapping>
+<!--   <servlet-mapping> -->
+<!--     <servlet-name>product_new</servlet-name> -->
+<!--     <url-pattern>/products/new</url-pattern> -->
+<!--   </servlet-mapping> -->
+<!--   <servlet-mapping> -->
+<!--     <servlet-name>product_edition</servlet-name> -->
+<!--     <url-pattern>/products/*</url-pattern> -->
+<!--   </servlet-mapping> -->
   
   <!-- Default page to serve -->
   <welcome-file-list>
     <welcome-file>index.jsp</welcome-file>
   </welcome-file-list>
+
+    <error-page>
+        <error-code>400</error-code>
+        <location>/error_400.jsp</location>
+    </error-page>
 
 </web-app>
