@@ -7,18 +7,26 @@
 
   <!-- Servlets -->
   <servlet>
-    <servlet-name>profile</servlet-name>
-    <servlet-class>pgu.server.service.ProfileServiceImpl</servlet-class>
+    <servlet-name>saveProduct</servlet-name>
+    <servlet-class>pgu.EditProduct</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>newProduct</servlet-name>
+    <servlet-class>pgu.EditProduct</servlet-class>
   </servlet>
   
   <servlet-mapping>
-    <servlet-name>profile</servlet-name>
-    <url-pattern>/pgu_geo/profile</url-pattern>
+    <servlet-name>saveProduct</servlet-name>
+    <url-pattern>/saveProduct</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>newProduct</servlet-name>
+    <url-pattern>/newProduct</url-pattern>
   </servlet-mapping>
   
   <!-- Default page to serve -->
   <welcome-file-list>
-    <welcome-file>index.html</welcome-file>
+    <welcome-file>index.jsp</welcome-file>
   </welcome-file-list>
 
 </web-app>
