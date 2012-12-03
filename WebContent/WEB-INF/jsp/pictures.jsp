@@ -142,6 +142,8 @@
     
     function uploadComplete(event) {
         document.getElementById("status").innerHTML = event.target.responseText;
+        
+        setTimeout("location.reload(true);", 1000);
     }    
     </script>
   </body>
