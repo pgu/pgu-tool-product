@@ -11,10 +11,11 @@ import javax.servlet.http.HttpServletResponse;
 @SuppressWarnings("serial")
 public class ProductServlet extends HttpServlet {
 
-    private final Helper h  = new Helper();
+    private final Helper h = new Helper();
 
     @Override
-    protected void doGet(final HttpServletRequest req, final HttpServletResponse resp) throws ServletException, IOException {
+    protected void doGet(final HttpServletRequest req, final HttpServletResponse resp) throws ServletException,
+    IOException {
 
         final String method = req.getParameter("method");
 
@@ -36,14 +37,16 @@ public class ProductServlet extends HttpServlet {
         }
     }
 
-    private void throwException(final int code, final String err_msg, final HttpServletResponse resp) throws IOException {
+    private void throwException(final int code, final String err_msg, final HttpServletResponse resp)
+            throws IOException {
 
         resp.sendError(code, err_msg);
         throw new IllegalArgumentException(err_msg);
     }
 
     @Override
-    protected void doPost(final HttpServletRequest req, final HttpServletResponse resp) throws ServletException, IOException {
+    protected void doPost(final HttpServletRequest req, final HttpServletResponse resp) throws ServletException,
+    IOException {
         try {
             putProduct(req, resp);
 
@@ -59,7 +62,7 @@ public class ProductServlet extends HttpServlet {
 
         DB.ref2product.remove(reference);
 
-        resp.sendRedirect("products");
+        resp.sendRedirect(req.getContextPath() + "/products");
     }
 
     private void checkReferenceExists(final HttpServletResponse resp, final String reference) throws IOException {
@@ -73,7 +76,8 @@ public class ProductServlet extends HttpServlet {
         }
     }
 
-    private void findProduct(final HttpServletRequest req, final HttpServletResponse resp) throws IOException, ServletException {
+    private void findProduct(final HttpServletRequest req, final HttpServletResponse resp) throws IOException,
+    ServletException {
 
         final String reference = parseReference(req);
 
@@ -98,7 +102,7 @@ public class ProductServlet extends HttpServlet {
         product.weight = req.getParameter("weight");
         product.width = req.getParameter("width");
 
-        resp.sendRedirect("products/" + product.reference);
+        resp.sendRedirect(req.getContextPath() + "/products/" + product.reference);
     }
 
     private String parseReference(final HttpServletRequest req) {

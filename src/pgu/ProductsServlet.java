@@ -15,10 +15,11 @@ import javax.servlet.http.HttpServletResponse;
 @SuppressWarnings("serial")
 public class ProductsServlet extends HttpServlet {
 
-    private final Helper h  = new Helper();
+    private final Helper h = new Helper();
 
     @Override
-    protected void doGet(final HttpServletRequest req, final HttpServletResponse resp) throws ServletException, IOException {
+    protected void doGet(final HttpServletRequest req, final HttpServletResponse resp) throws ServletException,
+    IOException {
 
         final Collection<Product> db_products = DB.ref2product.values();
 
@@ -42,7 +43,8 @@ public class ProductsServlet extends HttpServlet {
     }
 
     @Override
-    protected void doPost(final HttpServletRequest req, final HttpServletResponse resp) throws ServletException, IOException {
+    protected void doPost(final HttpServletRequest req, final HttpServletResponse resp) throws ServletException,
+    IOException {
 
         final String reference = req.getParameter("reference");
 
@@ -62,7 +64,7 @@ public class ProductsServlet extends HttpServlet {
 
         DB.ref2product.put(product.reference, product);
 
-        resp.sendRedirect("products/" + product.reference);
+        resp.sendRedirect(req.getContextPath() + "/products/" + product.reference);
     }
 
 }
