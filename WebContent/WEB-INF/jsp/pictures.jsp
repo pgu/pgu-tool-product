@@ -23,12 +23,7 @@
         padding: 9px 0;
       }
       #dropbox {
-        width: 300px;
         height: 200px;
-        border: 1px solid gray;
-        border-radius: 5px;
-        padding: 5px;
-        color: gray;
       }      
     </style>
     <link href="<%= ctx %>/assets/css/bootstrap-responsive.css" rel="stylesheet">
@@ -73,8 +68,19 @@
 
     <div class="container-fluid">
       <div class="row-fluid">
-          <div id="dropbox">Drag and drop a file here...</div>
+          <div id="dropbox" class="well">
+              <div class="row-fluid">
+                  <div class="span4"></div>
+                  <div class="span4">
+                    Drag and drop a file here...
+                  </div>
+                  <div class="span4"></div>
+              </div>
+          </div>
           <div id="status"></div>
+      </div>
+      <div class="row-fluid">
+        <div id="preview" style="border: 1px solid grey; height: 100px;"></div>
       </div>
       <div class="row-fluid">
       <%
@@ -114,37 +120,101 @@
 
     function dropUpload(event) {
         noop(event);
+        
         var files = event.dataTransfer.files;
-
-        for (var i = 0; i < files.length; i++) {
-            upload(files[i]);
-        }
+        upload(files);
     }    
     
-    function upload(file) {
-        document.getElementById("status").innerHTML = "Uploading " + file.name;
+    function upload(files) {
+        
+        var imageType = /image.*/;
+        var preview = document.getElementById('preview');
+        
+        // preview
+        for (var i = 0; i < files.length; i++) {
+            
+            var file = files[i];
+            
+            if (!file.type.match(imageType)) {
+                continue;
+            }
+            
+            var img = document.createElement('img');
+            preview.appendChild(img);
+            
+            var reader = new FileReader();
+            reader.onload = (function(aImg) {return function(e) { aImg.src = e.target.result; }; })(img);
+            reader.readAsDataURL(file);
+        }
+        
+        // upload
+        for (var i = 0; i < files.length; i++) {
+            var file = files[i];
+            new FileUpload(file);
+        }
+    }
+    
+    function Status(file) {
 
+        var status = document.createElement('div');
+        var status_name = document.createElement('div');
+        var status_pct = document.createElement('div');
+        
+        status_name.innerHTML = 'Uploading ' + file.name;
+        status_pct.innerHTML = '0%';
+        
+        document.getElementById("status").appendChild(status);
+        status.appendChild(status_name);
+        status.appendChild(status_pct);
+
+        this.file_name = file.name;
+        this.status_pct = status_pct;
+        
+        var self = this;
+
+        this.updateState = function(label) {
+            console.log(' >> update state ' + label);
+            self.status_pct.innerHTML = label;            
+        };
+        
+        this.isOver = function(result) {
+            self.status_name.title = result;
+            self.status_name.innerHTML = self.file_name + ' uploaded!';
+            self.status_pct.innerHTML = '';
+        };
+    }
+    
+    function FileUpload(file) {
+        
+        this.status = new Status(file);
+        
+        var self = this;
+        
+        var xhr = new XMLHttpRequest();
+        this.xhr = xhr;
+
+        this.xhr.addEventListener("progress", function(e) {
+            if (e.lengthComputable) {
+                var percentage = Math.round((e.loaded * 100) / e.total);
+                self.status.updateState(percentage + '%');
+            }
+        }, false);
+        
+        this.xhr.addEventListener("load", function(e){
+            self.status.updateState('100%');
+            self.status.isOver(e.target.responseText);
+            
+//             setTimeout("location.reload(true);", 1000);
+        }, false);
+        
+        this.xhr.open("POST", "<%= ctx %>/products/<%=product.reference%>/pictures", false); // If async=false, then you'll miss progress bar support.
+        
         var formData = new FormData();
         formData.append("file", file);
-
-        var xhr = new XMLHttpRequest();
-        xhr.upload.addEventListener("progress", uploadProgress, false);
-        xhr.addEventListener("load", uploadComplete, false);
-        xhr.open("POST", "<%= ctx %>/products/<%=product.reference%>/pictures", false); // If async=false, then you'll miss progress bar support.
-        xhr.send(formData);
-    }
-    
-    function uploadProgress(event) {
-        // Note: doesn't work with async=false.
-        var progress = Math.round(event.loaded / event.total * 100);
-        document.getElementById("status").innerHTML = "Progress " + progress + "%";
-    }
-    
-    function uploadComplete(event) {
-        document.getElementById("status").innerHTML = event.target.responseText;
         
-        setTimeout("location.reload(true);", 1000);
-    }    
+        this.xhr.send(formData);
+      }
+
     </script>
   </body>
 </html>
