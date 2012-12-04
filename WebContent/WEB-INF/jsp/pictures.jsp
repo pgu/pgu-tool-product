@@ -178,7 +178,7 @@
         };
         
         this.isOver = function(result) {
-            self.status_name.title = result;
+            console.log(result);
             self.status_name.innerHTML = self.file_name + ' uploaded!';
             self.status_pct.innerHTML = '';
         };
