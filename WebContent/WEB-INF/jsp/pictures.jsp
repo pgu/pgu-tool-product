@@ -23,7 +23,7 @@
         padding: 9px 0;
       }
       #dropbox {
-        height: 200px;
+        height: 100px;
       }      
       .preview {
         float: left;
@@ -82,19 +82,31 @@
                   <div class="span4"></div>
               </div>
           </div>
+          <p></p>
           <div id="status"></div>
       </div>
+      <p></p>
       <div class="row-fluid">
-        <div id="preview" style="border: 1px solid grey; height: 100px;"></div>
+        <div id="preview_container" class="collapse">
+            <p>Preview</p>
+            <ul id="preview" class="thumbnails"></ul>
+        </div>
       </div>
+      <p></p>
       <div class="row-fluid">
-      <%
-      for (String picture_name : pictures) {
-      %>
-        <img src="<%= ctx %>/products/<%=product.reference%>/pictures/<%=picture_name%>" />
-      <%
-      }
-      %>
+        <ul class="thumbnails">
+              <%
+              for (String picture_name : pictures) {
+              %>
+              <li class="span4">
+                <a href="javascript:;" class="thumbnail">
+                    <img src="<%= ctx %>/products/<%=product.reference%>/pictures/<%=picture_name%>" />
+                </a>
+              </li>
+              <%
+              }
+              %>
+        </ul>
       </div>
       
       <hr>
@@ -138,14 +150,27 @@
         // preview
         for (var i = 0; i < files.length; i++) {
             
+            if (i === 0) {
+                $('#preview_container').collapse('show');
+            }
+            
             var file = files[i];
             
             if (!file.type.match(imageType)) {
                 continue;
             }
             
+            var li = document.createElement('li');
+            li.className = 'span4';
+            
+            var _a = document.createElement('a');
+            _a.className = 'thumbnail';
+            
             var img = document.createElement('img');
-            preview.appendChild(img);
+            
+            preview.appendChild(li);
+            li.appendChild(_a);
+            _a.appendChild(img);
             
             var reader = new FileReader();
             reader.onload = (function(aImg) {return function(e) { aImg.src = e.target.result; }; })(img);
