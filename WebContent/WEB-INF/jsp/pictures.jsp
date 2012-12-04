@@ -169,6 +169,7 @@
 
         this.file_name = file.name;
         this.status_pct = status_pct;
+        this.status_name = status_name;
         
         var self = this;
 
