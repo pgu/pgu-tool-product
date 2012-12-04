@@ -25,6 +25,11 @@
       #dropbox {
         height: 200px;
       }      
+      .preview {
+        float: left;
+        margin-left: 20px;
+        margin-bottom: 10px;
+      }
     </style>
     <link href="<%= ctx %>/assets/css/bootstrap-responsive.css" rel="stylesheet">
 
@@ -148,6 +153,7 @@
         }
         
         // upload
+        window.nb_files = files.length;
         for (var i = 0; i < files.length; i++) {
             var file = files[i];
             new FileUpload(file);
@@ -162,6 +168,8 @@
         
         status_name.innerHTML = 'Uploading ' + file.name;
         status_pct.innerHTML = '0%';
+        
+        status.className = 'preview';
         
         document.getElementById("status").appendChild(status);
         status.appendChild(status_name);
@@ -180,8 +188,13 @@
         
         this.isOver = function(result) {
             console.log(result);
-            self.status_name.innerHTML = self.file_name + ' uploaded!';
+            self.status_name.innerHTML = '<strong>' + self.file_name + '</strong> uploaded!';
             self.status_pct.innerHTML = '';
+            
+            window.nb_files--;
+            if (window.nb_files === 0) {
+                setTimeout("location.reload(true);", 5000);
+            }
         };
     }
     
@@ -204,8 +217,6 @@
         this.xhr.addEventListener("load", function(e){
             self.status.updateState('100%');
             self.status.isOver(e.target.responseText);
-            
-//             setTimeout("location.reload(true);", 1000);
         }, false);
         
         this.xhr.open("POST", "<%= ctx %>/products/<%=product.reference%>/pictures", false); // If async=false, then you'll miss progress bar support.
