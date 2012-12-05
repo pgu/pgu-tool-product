@@ -88,12 +88,13 @@
       <p></p>
       <div class="row-fluid">
         <div id="preview_container" class="collapse">
-            <p>Preview</p>
+            <h3>Preview</h3>
             <ul id="preview" class="thumbnails"></ul>
         </div>
       </div>
       <p></p>
       <div class="row-fluid">
+        <h3>Pictures</h3>
         <ul class="thumbnails">
               <%
               for (String picture_name : pictures) {
@@ -218,7 +219,8 @@
             
             window.nb_files--;
             if (window.nb_files === 0) {
-                setTimeout("location.reload(true);", 5000);
+                self.status_pct.innerHTML = 'Page reloads in 3s';
+                setTimeout("location.reload(true);", 3000);
             }
         };
     }

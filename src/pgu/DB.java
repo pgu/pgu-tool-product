@@ -8,24 +8,33 @@ public class DB {
 
     static {
 
-        final Product pA = new Product();
-        pA.depth = "10''";
-        pA.designation = "Product for you";
-        pA.height = "20''";
-        pA.reference = "AAA";
-        pA.weight = "30 Kg";
-        pA.width = "40''";
+        final Product nexus4 = new Product();
+        nexus4.depth = "9.1 mm";
+        nexus4.designation = "Google nexus 4";
+        nexus4.height = "133.9 mm";
+        nexus4.reference = "google_nexus_4";
+        nexus4.weight = "139 g";
+        nexus4.width = "68.7 mm";
 
-        final Product pB = new Product();
-        pB.depth = "15''";
-        pB.designation = "Product for us";
-        pB.height = "25''";
-        pB.reference = "BBB";
-        pB.weight = "35 Kg";
-        pB.width = "45''";
+        final Product piggyBank = new Product();
+        piggyBank.depth = "11.1 inches";
+        piggyBank.designation = "Fisher-Price Laugh & Learn: Learning Piggy Bank";
+        piggyBank.height = "6.7 inches";
+        piggyBank.reference = "piggy_bank";
+        piggyBank.weight = "2.2 pounds";
+        piggyBank.width = "6.7 inches";
 
-        ref2product.put(pA.reference, pA);
-        ref2product.put(pB.reference, pB);
+        final Product set = new Product();
+        set.depth = "12 inches";
+        set.designation = "Stanley 94-248 65-Piece General Homeowner's Tool Set";
+        set.height = "3.9 inches";
+        set.reference = "B000UHMITE";
+        set.weight = "7.6 pounds";
+        set.width = "12 inches";
+
+        ref2product.put(nexus4.reference, nexus4);
+        ref2product.put(piggyBank.reference, piggyBank);
+        ref2product.put(set.reference, set);
     }
 
 }

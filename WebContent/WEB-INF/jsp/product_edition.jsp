@@ -111,14 +111,14 @@
             <label>Designation</label>
             <input name="designation" type="text" placeholder="Solution for roses' health..." value="<%= designation %>" /> 
             <label>Weight</label>
-            <input name="weight" type="text" placeholder="10 Kg..." value="<%= weight %>" />
+            <input name="weight" type="text" placeholder="10 kg..." value="<%= weight %>" />
             <legend>Dimensions</legend>
             <label>Width</label>
             <input name="width" type="text" placeholder="50''..." value="<%= width %>" />
-            <label>Depth</label>
-            <input name="depth" type="text" placeholder="10''..." value="<%= depth %>" />
             <label>Height</label>
             <input name="height" type="text" placeholder="90''..." value="<%= height %>" />
+            <label>Depth</label>
+            <input name="depth" type="text" placeholder="10''..." value="<%= depth %>" />
             <p></p>
             <button type="submit" class="btn">Save</button>
           </fieldset>
