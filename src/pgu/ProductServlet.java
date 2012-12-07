@@ -6,6 +6,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
@@ -80,7 +81,36 @@ public class ProductServlet extends HttpServlet {
         final int idxEnd = requestURI.lastIndexOf("/");
         final String filename = requestURI.substring(idxEnd + "/".length());
 
-        final File file = new File(pictures_folder, filename);
+        final String reference = parseReferenceFromPicturesUrl(req);
+        checkReferenceExists(resp, reference);
+        final Product product = DB.ref2product.get(reference);
+
+        File file = null;
+        try {
+            final int i = Integer.valueOf(filename);
+
+            if (i < 0 || i >= product.pictures.size()) {
+                throwException(404, String.format("Unknown picture for the reference [%s] !", reference), resp);
+            }
+
+            final Iterator<String> iterator = product.pictures.iterator();
+            for (int j = 0; j < product.pictures.size(); j++) {
+                final String picture = iterator.next();
+                if (i == j) {
+                    file = new File(pictures_folder, picture);
+                    break;
+                }
+            }
+
+        } catch (final NumberFormatException e) {
+
+            if (!product.pictures.contains(filename)) {
+                throwException(404, String.format("Unknown picture for the reference [%s] !", reference), resp);
+            }
+
+            file = new File(pictures_folder, filename);
+        }
+
 
         resp.setHeader("Content-Type", getServletContext().getMimeType(filename));
         resp.setHeader("Content-Length", String.valueOf(file.length()));
