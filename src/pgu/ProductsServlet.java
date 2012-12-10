@@ -48,7 +48,7 @@ public class ProductsServlet extends HttpServlet {
 
         final String reference = req.getParameter("reference");
 
-        if (h.isVoid(reference)) {
+        if (h.isBlank(reference)) {
 
             resp.sendError(400, "The reference is empty!");
             return;

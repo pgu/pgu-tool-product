@@ -37,6 +37,14 @@
     <servlet-name>products</servlet-name>
     <servlet-class>pgu.ProductsServlet</servlet-class>
   </servlet>
+  <servlet>
+    <servlet-name>quicklinks</servlet-name>
+    <servlet-class>pgu.QuickLinksServlet</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>menu_entries</servlet-name>
+    <servlet-class>pgu.MenuServlet</servlet-class>
+  </servlet>
   
   <servlet-mapping>
     <servlet-name>products</servlet-name>
@@ -49,6 +57,14 @@
   <servlet-mapping>
     <servlet-name>product_edition</servlet-name>
     <url-pattern>/products/*</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>menu_entries</servlet-name>
+    <url-pattern>/menu/entries/*</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>quicklinks</servlet-name>
+    <url-pattern>/menu/quicklinks</url-pattern>
   </servlet-mapping>
   
   <!-- Default page to serve -->
