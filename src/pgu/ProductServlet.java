@@ -7,6 +7,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Iterator;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
@@ -39,11 +41,64 @@ public class ProductServlet extends HttpServlet {
         super.init(config);
     }
 
+    private String getServerUrl(final HttpServletRequest request) {
+
+        final String scheme = request.getScheme();
+
+        int port = -1;
+        final int serverPort = request.getServerPort();
+
+        if ("http".equals(scheme) && port == 80) {
+            port = -1;
+
+        } else if ("https".equals(scheme) && port == 443) {
+            port = -1;
+
+        } else {
+            port = serverPort;
+        }
+
+        try {
+            final URL serverURL = new URL(scheme, request.getServerName(), port, "");
+            return serverURL.toString();
+
+        } catch (final MalformedURLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     @Override
     protected void doGet(final HttpServletRequest req, final HttpServletResponse resp) throws ServletException,
     IOException {
 
         final String requestURI = req.getRequestURI();
+
+        System.out.println("");
+        System.out.println(" !!!!!!!!!!!!!!!!!!!!");
+        System.out.println(" !!!!! info !!!!!!!!!");
+        System.out.println(" !!!!!!!!!!!!!!!!!!!!");
+        System.out.println("");
+        System.out.println(req.getContextPath());
+        // /productsTool
+        System.out.println(req.getPathInfo());
+        // /google_nexus_4
+        System.out.println(req.getRequestURI());
+        // /productsTool/products/google_nexus_4
+        System.out.println(req.getServletPath());
+        // /products
+        System.out.println(req.getRequestURL());
+        // http://localhost:8080/productsTool/products/google_nexus_4
+        System.out.println("");
+        System.out.println("");
+        System.out.println(req.getScheme());
+        System.out.println(req.getServerName());
+        System.out.println(req.getServerPort());
+        System.out.println(req.getContextPath());
+        System.out.println("");
+        System.out.println("");
+        System.out.println(getServerUrl(req) + req.getContextPath());
+        System.out.println(" !!!!!!!!!!!!!!!!!!!!");
+        System.out.println("");
 
         // System.out.println(" >>  rq uri: " + requestURI);
         // System.out.println(" >> rq path: " + req.getPathInfo());
