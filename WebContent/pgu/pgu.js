@@ -11,6 +11,7 @@ function showPictures() {
 
 // common
 function displayOtherProduct(product_ref) {
+	$('#productsModal').modal('hide');
 	goToOtherItemInPortal('description:' + product_ref);	
 };
 
