@@ -49,7 +49,15 @@
     <servlet-name>reset</servlet-name>
     <servlet-class>pgu.ResetServlet</servlet-class>
   </servlet>
+  <servlet>
+    <servlet-name>config</servlet-name>
+    <servlet-class>pgu.ConfigServlet</servlet-class>
+  </servlet>
   
+  <servlet-mapping>
+    <servlet-name>config</servlet-name>
+    <url-pattern>/config</url-pattern>
+  </servlet-mapping>
   <servlet-mapping>
     <servlet-name>reset</servlet-name>
     <url-pattern>/reset</url-pattern>

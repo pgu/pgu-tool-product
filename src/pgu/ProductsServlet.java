@@ -21,6 +21,8 @@ public class ProductsServlet extends HttpServlet {
     protected void doGet(final HttpServletRequest req, final HttpServletResponse resp) throws ServletException,
     IOException {
 
+        req.setAttribute(Config.RECIPIENT, Config.recipient);
+
         final Collection<Product> db_products = DB.ref2product.values();
 
         final ArrayList<Product> products = new ArrayList<Product>(db_products);
@@ -45,6 +47,8 @@ public class ProductsServlet extends HttpServlet {
     @Override
     protected void doPost(final HttpServletRequest req, final HttpServletResponse resp) throws ServletException,
     IOException {
+
+        req.setAttribute(Config.RECIPIENT, Config.recipient);
 
         final String reference = req.getParameter("reference");
 

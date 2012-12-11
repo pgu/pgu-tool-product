@@ -39,7 +39,7 @@ public class DB {
         set.reference = "B000UHMITE";
         set.weight = "7.6 pounds";
         set.width = "12 inches";
-        set.pictures.add("tool_set.png");
+        set.pictures.add("tool_set.jpg");
 
         ref2product.put(nexus4.reference, nexus4);
         ref2product.put(piggyBank.reference, piggyBank);

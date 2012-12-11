@@ -19,10 +19,9 @@ function sendToPortal(msg) {
     var fmt_msg = JSON.stringify(msg);
     console.log('[tool] ' + fmt_msg);
 
-    var recipient = 'http://127.0.0.1:8888';
-    console.log('[tool] ' + recipient);
+    console.log('[tool] ' + window.recipient); // TBD in jsp files
     
-    parent.postMessage(fmt_msg, recipient);
+    parent.postMessage(fmt_msg, window.recipient);
     console.log('[tool] send to portal [done]');
 };
 
@@ -38,14 +37,18 @@ function replaceMenuNewForMenuProduct(product_id) {
 };
 
 function sendTitleToPortal(title) {
-	console.log('[tool] send [title] to portal ' + title);
+	var sendTitle = function() {
+		console.log('[tool] send [title] to portal ' + title);
+		
+		var msg = {};
+		msg.type = 'menu_title';
+		msg.frame_id = window.frame_id;
+		msg.title = title;
+		
+		sendToPortal(msg);
+	};
 	
-	var msg = {};
-	msg.type = 'menu_title';
-	msg.frame_id = window.frame_id;
-	msg.title = title;
-	
-	sendToPortal(msg);
+	setTimeout(function(){sendTitle();}, 400);
 };
 
 function sendGoToPortal(product_id, menu_tag) {

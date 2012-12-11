@@ -47,6 +47,8 @@ public class ProductServlet extends HttpServlet {
 
         final String requestURI = req.getRequestURI();
 
+        req.setAttribute(Config.RECIPIENT, Config.recipient);
+
         //
         // for pictures
         // >> rq uri: /productsTool/products/BBB/pictures
@@ -183,6 +185,7 @@ public class ProductServlet extends HttpServlet {
     IOException {
 
         final String requestURI = req.getRequestURI();
+        req.setAttribute(Config.RECIPIENT, Config.recipient);
 
         try {
 

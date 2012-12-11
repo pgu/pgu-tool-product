@@ -108,7 +108,7 @@
             <% 
               } else {
             %>
-            <p><%=ref%></p>
+            <p><strong><%=ref%></strong></p>
             <% 
               }
             %>
@@ -176,6 +176,15 @@
     <script src="<%= ctx %>/assets/js/bootstrap.js"></script>
     <script src="<%= ctx %>/pgu/pgu.js"></script>
     <script type="text/javascript">
+    <%
+      String recipient = (String) request.getAttribute("recipient");
+      if (recipient == null) {%>
+        window.recipient = null;
+           
+    <%} else {%>
+        window.recipient = '<%=recipient%>';
+    <%}%>
+    
     function page_init() {
     	
     	if (is_in_portal()) {
