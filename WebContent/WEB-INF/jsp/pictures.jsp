@@ -280,6 +280,8 @@
             console.log(' >> update state ' + label);
             self.status_pct.innerHTML = label;            
         };
+
+        this.countdown = 3;
         
         this.isOver = function(result) {
             console.log(result);
@@ -288,8 +290,20 @@
             
             window.nb_files--;
             if (window.nb_files === 0) {
-                self.status_pct.innerHTML = 'Page reloads in 3s';
-                setTimeout("location.reload(true);", 3000);
+            	
+        	    self.status_pct.innerHTML = 'Page reloads in ' + self.countdown + 's';
+        	    self.countdown--;
+        	    
+            	setInterval(function() {
+            		
+            	    if (self.countdown === 0) {
+            	    	location.reload(true);            	    	
+            	    }
+            	    
+            	    self.status_pct.innerHTML = 'Page reloads in ' + self.countdown + 's';
+            	    self.countdown--;
+            		
+            	}, 1000);
             }
         };
     };
