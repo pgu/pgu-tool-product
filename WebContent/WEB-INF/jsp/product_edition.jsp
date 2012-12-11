@@ -39,6 +39,7 @@
 
   <body>
     <%
+        String ref = "";
         String designation = "";
         String weight = "";
         String width = "";
@@ -49,18 +50,20 @@
         Product product = (Product) request.getAttribute("product");
         
         if (product != null) {
+            ref = product.reference;
             designation = product.designation; 
             weight = product.weight; 
             width = product.width; 
             depth = product.depth; 
             height = product.height; 
             
-            form_url += "/" + product.reference;
+            form_url += "/" + ref;
         }
-    
+
+        String frameId = (String) request.getParameter("frameId");
     %>
 
-    <div class="navbar navbar-inverse navbar-fixed-top">
+    <div id="products_toolbar" class="navbar navbar-inverse navbar-fixed-top" style="display:none;">
       <div class="navbar-inner">
         <div class="container-fluid">
           <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
@@ -80,8 +83,8 @@
                 <% 
                   } else {
                 %>
-                <li class="active"><a href="<%= ctx %>/products/<%=product.reference%>">Product <%=product.reference%></a></li>
-                <li><a href="<%= ctx %>/products/<%=product.reference%>/pictures">Product <%=product.reference%>'s pictures</a></li>
+                <li class="active"><a href="<%= ctx %>/products/<%=ref%>">Product <%=ref%></a></li>
+                <li><a href="<%= ctx %>/products/<%=ref%>/pictures">Product <%=ref%>'s pictures</a></li>
                 <% 
                   }
                 %>
@@ -104,7 +107,7 @@
             <% 
               } else {
             %>
-            <p><%= product.reference %></p>
+            <p><%=ref%></p>
             <% 
               }
             %>
@@ -119,11 +122,16 @@
             <input name="height" type="text" placeholder="90''..." value="<%= height %>" />
             <label>Depth</label>
             <input name="depth" type="text" placeholder="10''..." value="<%= depth %>" />
+            <input name="frameId" type="hidden" value="<%= frameId %>" />
             <p></p>
             <button type="submit" class="btn">Save</button>
           </fieldset>
-        </form>      
-            
+        </form>    
+      </div>
+      
+      <div id="pictures_link" class="row-fluid" style="display:none;">
+          <p></p>  
+          <button class="btn btn-inverse" onclick="showPictures()">See pictures</button>        
       </div>
       
       <hr>
@@ -136,6 +144,42 @@
 
     <script src="http://code.jquery.com/jquery-latest.js"></script>
     <script src="<%= ctx %>/assets/js/bootstrap.js"></script>
+    <script src="<%= ctx %>/pgu/pgu.js"></script>
+    <script type="text/javascript">
+    function page_init() {
+    	
+    	console.log(window.location);
+    	
+    	if (is_in_portal()) {
+        	document.getElementById('products_toolbar').style.display = 'none';
+        	document.getElementById('pictures_link').style.display = '';
+    		
+    	} else {
+        	document.getElementById('products_toolbar').style.display = '';
+        	document.getElementById('pictures_link').style.display = 'none';
+    		
+    	}
+    	
+    	
+    	if (!is_in_portal()) {
+    		console.log("!! is not in portal !!");
+    		return;
+    	}
+
+    	<%if (product != null) {%>
+    	    window.product_ref = '<%=ref%>';
+        	if (window.frame_id && window.frame_id.indexOf('product_new') > -1) {
+        		replaceMenuNewForMenuProduct(product_ref);
+            	sendTitleToPortal(product_ref);
+        	}
+        	
+           
+    	<%} else {%>
+    	   document.getElementById('pictures_link').style.display = 'none';
+    	<%}%>
+
+    }
+    </script>
 
   </body>
 </html>

@@ -64,7 +64,16 @@ public class ProductsServlet extends HttpServlet {
 
         DB.ref2product.put(product.reference, product);
 
-        resp.sendRedirect(req.getContextPath() + "/products/" + product.reference);
+        ///////////////////
+        String paramFrameId = "";
+
+        final String frameId = req.getParameter("frameId");
+        if (!h.isBlank(frameId) && !"null".equals(frameId)) {
+            paramFrameId = "?frameId=" + frameId;
+        }
+
+        final String newRequest = req.getContextPath() + "/products/" + product.reference + paramFrameId;
+        resp.sendRedirect(newRequest);
     }
 
 }

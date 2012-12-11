@@ -15,6 +15,7 @@ public class DB {
         nexus4.reference = "google_nexus_4";
         nexus4.weight = "139 g";
         nexus4.width = "68.7 mm";
+        nexus4.pictures.add("google-nexus.png");
 
         final Product piggyBank = new Product();
         piggyBank.depth = "11.1 inches";
@@ -23,6 +24,7 @@ public class DB {
         piggyBank.reference = "piggy_bank";
         piggyBank.weight = "2.2 pounds";
         piggyBank.width = "6.7 inches";
+        piggyBank.pictures.add("piggy-bank.png");
 
         final Product set = new Product();
         set.depth = "12 inches";
@@ -31,6 +33,7 @@ public class DB {
         set.reference = "B000UHMITE";
         set.weight = "7.6 pounds";
         set.width = "12 inches";
+        set.pictures.add("tool_set.png");
 
         ref2product.put(nexus4.reference, nexus4);
         ref2product.put(piggyBank.reference, piggyBank);

@@ -284,7 +284,15 @@ public class ProductServlet extends HttpServlet {
         product.weight = req.getParameter("weight");
         product.width = req.getParameter("width");
 
-        resp.sendRedirect(req.getContextPath() + "/products/" + product.reference);
+        /////////////////
+        String paramFrameId = "";
+
+        final String frameId = req.getParameter("frameId");
+        if (!h.isBlank(frameId) && !"null".equals(frameId)) {
+            paramFrameId = "?frameId=" + frameId;
+        }
+
+        resp.sendRedirect(req.getContextPath() + "/products/" + product.reference + paramFrameId);
     }
 
     private String parseReference(final HttpServletRequest req) {

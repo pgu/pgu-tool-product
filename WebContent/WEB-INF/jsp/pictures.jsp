@@ -51,7 +51,7 @@
         Product product = (Product) request.getAttribute("product");
         LinkedHashSet<String> pictures = product.pictures;
     %>
-    <div class="navbar navbar-inverse navbar-fixed-top">
+    <div id="products_toolbar" class="navbar navbar-inverse navbar-fixed-top" style="display:none;">
       <div class="navbar-inner">
         <div class="container-fluid">
           <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
@@ -77,7 +77,7 @@
               <div class="row-fluid">
                   <div class="span4"></div>
                   <div class="span4">
-                    Drag and drop a file here...
+                    Drag and drop pictures here...
                   </div>
                   <div class="span4"></div>
               </div>
@@ -109,6 +109,10 @@
               %>
         </ul>
       </div>
+      <div id="description_link" class="row-fluid" style="display:none;">
+          <p></p>  
+          <button class="btn btn-inverse" onclick="showDescription()">See description</button>        
+      </div>
       
       <hr>
 
@@ -120,9 +124,32 @@
 
     <script src="http://code.jquery.com/jquery-latest.js"></script>
     <script src="<%= ctx %>/assets/js/bootstrap.js"></script>
+    <script src="<%= ctx %>/pgu/pgu.js"></script>
 
     <script type="text/javascript">
     
+    function page_init() {
+        
+        if (is_in_portal()) {
+            document.getElementById('products_toolbar').style.display = 'none';
+            document.getElementById('description_link').style.display = '';
+            
+        } else {
+            document.getElementById('products_toolbar').style.display = '';
+            document.getElementById('description_link').style.display = 'none';
+        	
+        }
+        	
+        if (!is_in_portal()) {
+            console.log("!! is not in portal !!");
+            return;
+        }
+
+        <%if (product != null) {%>
+            window.product_ref = '<%=product.reference%>';
+        <%}%>
+    };
+
     window.onload = function() {
         var dropbox = document.getElementById("dropbox");
         dropbox.addEventListener("dragenter", noop, false);
@@ -134,14 +161,14 @@
     function noop(event) {
         event.stopPropagation();
         event.preventDefault();
-    }
+    };
 
     function dropUpload(event) {
         noop(event);
         
         var files = event.dataTransfer.files;
         upload(files);
-    }    
+    };    
     
     function upload(files) {
         
@@ -184,7 +211,7 @@
             var file = files[i];
             new FileUpload(file);
         }
-    }
+    };
     
     function Status(file) {
 
@@ -223,7 +250,7 @@
                 setTimeout("location.reload(true);", 3000);
             }
         };
-    }
+    };
     
     function FileUpload(file) {
         
@@ -252,7 +279,7 @@
         formData.append("file", file);
         
         this.xhr.send(formData);
-      }
+      };
 
     </script>
   </body>
