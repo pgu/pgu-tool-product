@@ -10,6 +10,10 @@ function showPictures() {
 };
 
 // common
+function displayOtherProduct(product_ref) {
+	goToOtherItemInPortal('description:' + product_ref);	
+};
+
 function sendToPortal(msg) {
 	
     var fmt_msg = JSON.stringify(msg);

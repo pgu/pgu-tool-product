@@ -1,6 +1,7 @@
 <%@ page import="pgu.Product" %>
 <%@ page import="java.lang.String" %>
 <%@ page import="java.util.LinkedHashSet" %>
+<%@ page import="java.util.ArrayList" %>
 
 <%
     String ctx = request.getContextPath();
@@ -109,11 +110,41 @@
               %>
         </ul>
       </div>
-      <div id="description_link" class="row-fluid" style="display:none;">
-          <p></p>  
-          <button class="btn btn-inverse" onclick="showDescription()">See description</button>        
-      </div>
       
+      <hr>
+      
+      <div id="description_link" class="row-fluid" style="display:none;">
+          <p></p><button class="btn btn-inverse" onclick="showDescription()">See description</button>        
+      </div>
+      <div id="products_link" class="row-fluid" style="display:none;">
+          <!-- Button to trigger modal -->
+          <p></p><a href="#productsModal" role="button" class="btn btn-inverse" data-toggle="modal">Products</a>
+             
+          <!-- Modal -->
+          <div id="productsModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
+              <h3 id="myModalLabel">Products</h3>
+            </div>
+            <div class="modal-body">
+              <%
+                  ArrayList<String> references = (ArrayList<String>) request.getAttribute("references");
+                  if (references != null) {
+                      for (String _ref : references) {
+              %>            
+              <p></p><button class="btn btn-primary" onclick="displayOtherProduct('<%=_ref%>')"><%=_ref%></button>
+              <%
+                      }
+                  }
+              %>            
+            
+            </div>
+            <div class="modal-footer">
+              <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+            </div>
+          </div>
+      </div>
+          
       <hr>
 
       <footer>
@@ -133,10 +164,12 @@
         if (is_in_portal()) {
             document.getElementById('products_toolbar').style.display = 'none';
             document.getElementById('description_link').style.display = '';
+            document.getElementById('products_link').style.display = '';
             
         } else {
             document.getElementById('products_toolbar').style.display = '';
             document.getElementById('description_link').style.display = 'none';
+            document.getElementById('products_link').style.display = 'none';
         	
         }
         	

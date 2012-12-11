@@ -6,6 +6,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
@@ -139,6 +141,10 @@ public class ProductServlet extends HttpServlet {
 
         req.setAttribute("product", product);
 
+        final ArrayList<String> references = new ArrayList<String>(DB.ref2product.keySet());
+        Collections.sort(references);
+        req.setAttribute("references", references);
+
         final RequestDispatcher dispatch = req.getRequestDispatcher("/WEB-INF/jsp/pictures.jsp");
         dispatch.forward(req, resp);
     }
@@ -156,6 +162,11 @@ public class ProductServlet extends HttpServlet {
 
     private void createProduct(final HttpServletRequest req, final HttpServletResponse resp) throws ServletException,
     IOException {
+
+        final ArrayList<String> references = new ArrayList<String>(DB.ref2product.keySet());
+        Collections.sort(references);
+        req.setAttribute("references", references);
+
         final RequestDispatcher dispatch = req.getRequestDispatcher("/WEB-INF/jsp/product_edition.jsp");
         dispatch.forward(req, resp);
     }
@@ -267,6 +278,10 @@ public class ProductServlet extends HttpServlet {
 
         final Product product = DB.ref2product.get(reference);
         req.setAttribute("product", product);
+
+        final ArrayList<String> references = new ArrayList<String>(DB.ref2product.keySet());
+        Collections.sort(references);
+        req.setAttribute("references", references);
 
         final RequestDispatcher dispatch = req.getRequestDispatcher("/WEB-INF/jsp/product_edition.jsp");
         dispatch.forward(req, resp);
