@@ -7,6 +7,12 @@ public class DB {
     public static HashMap<String, Product> ref2product = new HashMap<String, Product>();
 
     static {
+        resetData();
+    }
+
+    public static void resetData() {
+
+        ref2product.clear();
 
         final Product nexus4 = new Product();
         nexus4.depth = "9.1 mm";
