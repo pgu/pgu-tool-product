@@ -215,6 +215,7 @@
         	sendTitleToPortal(product_ref);
            
     	<%} else {%>
+    	   sendTitleToPortal("New product");
     	   document.getElementById('pictures_link').style.display = 'none';
     	<%}%>
 
